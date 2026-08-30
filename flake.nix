@@ -61,6 +61,7 @@
             };
             update-branches = flake-lib.lib.mkUpdateBranches {
               inherit pkgs source;
+              excludePrereleases = true;
               pinSchema = "github";
             };
           };
