@@ -28,9 +28,12 @@
               };
             in
             {
-              hf-xet = pyprev.hf-xet.overridePythonAttrs (_: {
+              hf-xet = pyprev.hf-xet.overridePythonAttrs (oldAttrs: {
                 inherit version src;
                 doCheck = false;
+                postPatch = (oldAttrs.postPatch or "") + ''
+                  sed -i '/^version =/s/=.*$/= "${version}"/' Cargo.toml
+                '';
                 cargoDeps = final.rustPlatform.fetchCargoVendor {
                   pname = "hf-xet";
                   inherit version src;
